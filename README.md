@@ -1,4 +1,5 @@
-<img width="290" height="467" alt="Screenshot 2026-06-28 at 2 50 49 PM" src="https://github.com/user-attachments/assets/7307fab8-2018-477e-900a-8735485d6d92" />
+<img width="341" height="688" alt="Screenshot 2026-07-01 at 3 57 58 PM" src="https://github.com/user-attachments/assets/28c01aa3-a680-4e4c-84d1-6b3b0c61a7a8" />
+
 <img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-06-28 at 14 50 58" src="https://github.com/user-attachments/assets/6973fc68-2eac-4798-99fd-8cfbc9913708" />
 <img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-06-28 at 14 52 33" src="https://github.com/user-attachments/assets/1654324f-18d1-491c-a343-f88b9ce5052c" />
 <img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 - 2026-06-28 at 14 53 32" src="https://github.com/user-attachments/assets/61181b7a-9325-4e6a-aa29-bee401de5779" />
