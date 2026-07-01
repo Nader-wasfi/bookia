@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'features/auth/data/data_sources/auth_remote_data_source.dart';
+import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/domain/use_cases/login_use_case.dart';
+import 'features/auth/domain/use_cases/register_use_case.dart';
 import 'features/auth/presentation/cubit/auth_cubit.dart';
 import 'features/auth/presentation/views/login_view.dart';
 
@@ -12,8 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authRemoteDataSource = AuthRemoteDataSource();
+    final authRepository = AuthRepositoryImpl(remoteDataSource: authRemoteDataSource);
+    final loginUseCase = LoginUseCase(repository: authRepository);
+    final registerUseCase = RegisterUseCase(repository: authRepository);
+
     return BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => AuthCubit(
+        loginUseCase: loginUseCase,
+        registerUseCase: registerUseCase,
+      ),
       child: MaterialApp(
         title: 'Bookia App',
         debugShowCheckedModeBanner: false,
@@ -22,7 +34,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           useMaterial3: true,
         ),
-        home: LoginView(), 
+        home: LoginView(),
       ),
     );
   }

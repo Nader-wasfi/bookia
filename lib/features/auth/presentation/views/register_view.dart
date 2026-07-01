@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/models/register_request_model.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_states.dart';
 
@@ -63,7 +62,7 @@ class RegisterView extends StatelessWidget {
                 listener: (context, state) {
                   if (state is AuthSuccessState) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message), backgroundColor: Colors.green));
-                    Navigator.pop(context); // يرجع لشاشة الـ Login بعد النجاح
+                    Navigator.pop(context); 
                   }
                   if (state is AuthErrorState) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errorMessage), backgroundColor: Colors.red));
@@ -79,13 +78,11 @@ class RegisterView extends StatelessWidget {
                       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFBB9967), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          final model = RegisterRequestModel(
-                            name: _nameController.text.trim(),
-                            email: _emailController.text.trim(),
-                            password: _passwordController.text.trim(),
-                            passwordConfirmation: _confirmPasswordController.text.trim(),
+                          context.read<AuthCubit>().register(
+                            _nameController.text.trim(),
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
                           );
-                          context.read<AuthCubit>().register(model);
                         }
                       },
                       child: const Text("REGISTER", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),

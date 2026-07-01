@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../home/presentation/views/home_view.dart';
-import '../../data/models/login_request_model.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_states.dart';
 import 'register_view.dart';
@@ -32,7 +31,6 @@ class LoginView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // إضافة اللوجو الـ SVG هنا في شاشة الـ Login
                 SvgPicture.asset(
                   'assets/images/logo_1.svg',
                   height: 80,
@@ -73,7 +71,6 @@ class LoginView extends StatelessWidget {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.message), backgroundColor: Colors.green),
                       );
-                      // التوجيه التلقائي لشاشة الـ Home عند نجاح تسجيل الدخول ومسح شاشة الـ Login من الـ Stack
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => const HomeView()),
@@ -99,11 +96,10 @@ class LoginView extends StatelessWidget {
                         ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            final loginModel = LoginRequestModel(
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text,
+                            context.read<AuthCubit>().login(
+                              _emailController.text.trim(),
+                              _passwordController.text,
                             );
-                            context.read<AuthCubit>().login(loginModel);
                           }
                         },
                         child: const Text("LOG IN", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),

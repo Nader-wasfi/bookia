@@ -1,39 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/data_sources/auth_remote_data_source.dart';
-import '../../data/models/login_request_model.dart';
-import '../../data/models/register_request_model.dart';
+import '../../domain/entities/auth_entity.dart';
+import '../../domain/use_cases/login_use_case.dart';
+import '../../domain/use_cases/register_use_case.dart';
 import 'auth_states.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
-  final AuthRemoteDataSource _dataSource = AuthRemoteDataSource();
+  final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
 
-  AuthCubit() : super(AuthInitialState());
+  AuthCubit({
+    required this.loginUseCase,
+    required this.registerUseCase,
+  }) : super(AuthInitialState());
 
-  void register(RegisterRequestModel model) async {
+  void login(String email, String password) async {
     emit(AuthLoadingState());
     try {
-      final response = await _dataSource.register(model);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        emit(AuthSuccessState("تم إنشاء الحساب بنجاح! 🚀"));
-      } else {
-        emit(AuthErrorState(response.data['message'] ?? "فشل تسجيل الحساب"));
-      }
+      final entity = AuthEntity(email: email, password: password);
+      await loginUseCase.call(entity);
+      emit(AuthSuccessState("تم تسجيل الدخول بنجاح! 👋"));
     } catch (e) {
-      emit(AuthErrorState(e.toString()));
+      emit(AuthErrorState(e.toString().replaceAll("Exception: ", "")));
     }
   }
 
-  void login(LoginRequestModel model) async {
+  void register(String name, String email, String password) async {
     emit(AuthLoadingState());
     try {
-      final response = await _dataSource.login(model);
-      if (response.statusCode == 200) {
-        emit(AuthSuccessState("تم تسجيل الدخول بنجاح! 👋"));
-      } else {
-        emit(AuthErrorState(response.data['message'] ?? "فشل تسجيل الدخول"));
-      }
+      final entity = AuthEntity(name: name, email: email, password: password);
+      await registerUseCase.call(entity);
+      emit(AuthSuccessState("تم إنشاء الحساب بنجاح! 🚀"));
     } catch (e) {
-      emit(AuthErrorState(e.toString()));
+      emit(AuthErrorState(e.toString().replaceAll("Exception: ", "")));
     }
   }
 }

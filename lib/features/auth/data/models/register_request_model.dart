@@ -16,7 +16,7 @@ class RegisterRequestModel {
       'name': name,
       'email': email,
       'password': password,
-      'password_confirmation': passwordConfirmation, // التحويل لـ snake_case عشان السيرفر
+      'password_confirmation': passwordConfirmation,
     };
   }
 }
